@@ -12,6 +12,7 @@ def get_commands(token, img_file):
     img_file.save("tmp.png")
     print(token)
 
+    # your adb shell commands
     cmds = [
         'input text "111"',
         'input text "222"',

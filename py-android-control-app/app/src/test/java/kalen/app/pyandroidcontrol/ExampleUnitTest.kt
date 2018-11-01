@@ -1,4 +1,4 @@
-package app.kalen.pyandroidcontrol
+package kalen.app.pyandroidcontrol
 
 import org.junit.Test
 

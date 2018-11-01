@@ -1,4 +1,4 @@
-package app.kalen.pyandroidcontrol
+package kalen.app.pyandroidcontrol
 
 import android.os.Environment
 import com.jaredrummler.android.shell.Shell
@@ -6,7 +6,6 @@ import okhttp3.*
 import org.json.JSONObject
 import org.json.JSONTokener
 import java.io.File
-import java.io.IOException
 import java.lang.Exception
 import java.util.ArrayList
 
@@ -72,7 +71,7 @@ object NetUtils {
     }
 
     /**
-     * get login token_id from control server
+     * get login token and interval information from control server
      */
     fun getToken() {
         val client = OkHttpClient()
@@ -83,9 +82,22 @@ object NetUtils {
 
         try {
             val resp = call.execute()
-            println(resp.body()!!.string())
-        } catch (e: IOException) {
+            val body = resp.body()!!.string()
+            println(body)
+            val tokener = JSONTokener(body)
+            val jsonObj = JSONObject(tokener)
+            token = jsonObj.get("token").toString()
+            interval = jsonObj.get("interval").toString().toLong()
+        } catch (e: Exception) {
             e.printStackTrace()
+        }
+
+        println(token)
+        println(interval)
+
+        // the minimum interval is 100ms
+        if (interval < 100) {
+            interval = 100
         }
     }
 }

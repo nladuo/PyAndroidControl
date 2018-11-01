@@ -1,4 +1,4 @@
-package app.kalen.pyandroidcontrol
+package kalen.app.pyandroidcontrol
 
 import android.Manifest
 import android.app.AlertDialog
@@ -19,6 +19,9 @@ import android.view.View
 import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.support.v4.app.ActivityCompat
+import android.widget.EditText
+import android.app.ProgressDialog
+import android.widget.TextView
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -26,12 +29,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var checkBtn: Button? = null
     private var startBtn: Button? = null
     private var stopBtn: Button? = null
+    private var urlEdit: EditText? = null
+    private var showTView: TextView? = null
+    private var sp: SharedPreferences? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
+        initInput()
+
+        showTView = findViewById(R.id.show_tview)
 
         // check the control server connection
         checkBtn = findViewById(R.id.check_btn)
@@ -44,13 +54,24 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         // shutdown the service
         stopBtn = findViewById(R.id.terminate_btn)
         stopBtn!!.setOnClickListener(this)
+    }
 
+    private fun initInput() {
+        urlEdit = findViewById(R.id.url_input_edit)
+
+        sp = getSharedPreferences("Default", Context.MODE_PRIVATE)
+        NetUtils.BASE_URL = sp!!.getString("base_url", "")
+        urlEdit!!.setText(NetUtils.BASE_URL)
     }
 
     override fun onClick(v: View?) {
         when(v!!.id) {
             R.id.check_btn -> {
-                val task = GetTokenTask()
+                val editor = sp!!.edit()
+                NetUtils.BASE_URL = urlEdit!!.text.toString()
+                editor.putString("base_url", NetUtils.BASE_URL)
+                editor.apply()
+                val task = GetTokenTask(this)
                 task.execute()
             }
 
@@ -144,20 +165,38 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
 
-    private inner class GetTokenTask: AsyncTask<Void, Void, Int>() {
+    private inner class GetTokenTask(internal var context: Context): AsyncTask<Void, Void, Int>() {
+
+        var progressDialog: ProgressDialog? = null
 
         override fun onPreExecute() {
             super.onPreExecute()
-
-
+            progressDialog = ProgressDialog.show(context, "Loading",
+                "checking the connectivity from Control Server", true, false)
         }
 
         override fun doInBackground(vararg params: Void?): Int {
             NetUtils.getToken()
-
+            Thread.sleep(1000) // sleep 1 second to make UI more friendly
             return 1
         }
+
+        override fun onPostExecute(result: Int?) {
+            super.onPostExecute(result)
+            progressDialog!!.dismiss()
+            if (NetUtils.BASE_URL != "") {
+                showTView!!.setText("token:${NetUtils.token},  interval:${NetUtils.interval}")
+                startBtn!!.isEnabled = true
+                stopBtn!!.isEnabled = true
+            }
+        }
     }
+
+//    inner class CheckUpdateAsyncTask(internal var context: Context, internal var isForeGround: Boolean) :
+//        AsyncTask<Void, Void, String>() {
+//        internal var progressDialog: ProgressDialog? = null
+//
+//    }
 
 
 }

@@ -1,4 +1,4 @@
-package app.kalen.pyandroidcontrol
+package kalen.app.pyandroidcontrol
 
 
 import android.app.Service
@@ -15,6 +15,7 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.Toast
 import com.jaredrummler.android.shell.Shell
+import java.lang.Exception
 import java.util.*
 
 
@@ -50,7 +51,7 @@ class BackgroundService : Service() {
     }
 
     override fun onBind(intent: Intent): IBinder? {
-        BackgroundService.isStarted = true
+        isStarted = true
         showFloatingWindow()
 
         return null
@@ -58,10 +59,13 @@ class BackgroundService : Service() {
 
     override fun onUnbind(intent: Intent): Boolean {
         windowManager!!.removeView(button)
-        BackgroundService.isStarted = false
+        isStarted = false
         return super.onUnbind(intent)
     }
 
+    /**
+     * show the floating button which control the Command Task
+     */
     private fun showFloatingWindow() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!Settings.canDrawOverlays(this)) {
@@ -95,7 +99,7 @@ class BackgroundService : Service() {
                                     val rndTime:Long = (50 + rnd.nextInt(100)).toLong()
                                     Thread.sleep(rndTime)
                                 }
-                            } catch (e: InterruptedException) {
+                            } catch (e: Exception) {
                                 e.printStackTrace()
                             }
                         }
@@ -128,7 +132,7 @@ class BackgroundService : Service() {
                     val nowX = event.rawX.toInt()
                     val nowY = event.rawY.toInt()
 
-                    // when clicked also trigger the ACTION_MOVE
+                    // when button was clicked, the ACTION_MOVE also was triggered
                     if ((nowX != x) or (nowY != y)) {
                         isMoving = true
                     }
