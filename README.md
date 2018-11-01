@@ -1,12 +1,12 @@
 # PyAndroidControl
-control your android device via python script.
+Control your Android device via python scripts.
 
 ## Architecture
 ![](architecture.png)
 
 ## Usage
 ### 1. Install the App
-Install the PyAndroidControl App, and make sure your device has been **"root"**
+Install the PyAndroidControl App, and make sure your device has been **"root"**.
 
 ### 2. Write your Logics
 change the [simple-control-server/logics.py](simple-control-server/logics.py) to what ever you want.
