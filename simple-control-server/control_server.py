@@ -23,7 +23,8 @@ def allowed_file(filename):
 @app.route('/login')
 def login():
     return json.dumps({
-        "token": str(uuid.uuid4())
+        "token": str(uuid.uuid4()),
+        "interval": 1000
     })
 
 
@@ -39,7 +40,6 @@ def screenshot_upload():
             try:
                 if file and allowed_file(file.filename):
                     token = request.args.get("token")
-
                     cmds = get_commands(token, file)
 
                     return json.dumps({'code': 0, 'msg': 'success', 'commands': cmds})
@@ -50,5 +50,5 @@ def screenshot_upload():
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=6777)
+    app.run(host="0.0.0.0", port=6777, debug=True)
 

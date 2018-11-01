@@ -14,6 +14,8 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.Toast
+import com.jaredrummler.android.shell.Shell
+import java.util.*
 
 
 class BackgroundService : Service() {
@@ -67,7 +69,7 @@ class BackgroundService : Service() {
             }
         }
         button = Button(applicationContext)
-        button!!.text = "Start"
+        button!!.setText(R.string.startTxt)
         windowManager!!.addView(button, layoutParams)
 
         button!!.setOnTouchListener(FloatingOnTouchListener())
@@ -77,23 +79,29 @@ class BackgroundService : Service() {
             println(performClick)
             if (performClick) {
                 if (!taskStarted) {
-                    button!!.text = "Stop"
+                    button!!.setText(R.string.stopTxt)
                     Toast.makeText(applicationContext, "Task Started!!", Toast.LENGTH_SHORT).show()
                     // start a thread to run in backend.
                     Thread(Runnable {
+                        val rnd = Random()
                         while (this@BackgroundService.taskStarted) {
                             try {
-                                Thread.sleep(1000)
+                                Thread.sleep(NetUtils.interval)
+                                val cmds = NetUtils.uploadScreenshot()
 
-                                NetUtils.uploadScreenshot()
+                                for (cmd in cmds) {
+                                    Shell.SU.run(cmd)
+                                    // random sleep 50-150ms
+                                    val rndTime:Long = (50 + rnd.nextInt(100)).toLong()
+                                    Thread.sleep(rndTime)
+                                }
                             } catch (e: InterruptedException) {
                                 e.printStackTrace()
                             }
-
                         }
                     }).start()
                 } else {
-                    button!!.text = "Start"
+                    button!!.setText(R.string.startTxt)
                     Toast.makeText(applicationContext, "Task Stopped!!", Toast.LENGTH_SHORT).show()
                 }
                 taskStarted = !taskStarted

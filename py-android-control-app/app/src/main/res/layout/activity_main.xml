@@ -5,27 +5,62 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="10dp"
     tools:context=".MainActivity">
 
-    <Button android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:id="@+id/start_btn"
-            android:text="@string/start_btn_txt" app:layout_constraintHorizontal_bias="0.502"
-            app:layout_constraintVertical_bias="0.133"/>
 
-    <Button android:layout_width="wrap_content"
+    <EditText
+            android:hint="@string/edtext_hint"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="1.0" app:layout_constraintVertical_bias="0.006"/>
+
+    <Button
+            android:text="@string/check_btn_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/check_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.146" app:layout_constraintHorizontal_bias="0.0"/>
+
+    <TextView android:layout_width="match_parent"
+              android:text="@string/service_hint_txt"
+              android:layout_margin="5dp"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintLeft_toLeftOf="parent"
+              app:layout_constraintRight_toRightOf="parent"
+              app:layout_constraintTop_toTopOf="parent"
+              android:layout_height="wrap_content"
+              app:layout_constraintVertical_bias="0.326"/>
+
+    <Button android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:enabled="false"
+            android:id="@+id/start_btn"
+            android:text="@string/start_btn_txt" app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintVertical_bias="0.39"/>
+
+    <Button android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:enabled="false"
             android:id="@+id/terminate_btn"
-            android:text="@string/terminate_btn_txt" app:layout_constraintHorizontal_bias="0.502"
-            app:layout_constraintVertical_bias="0.321"/>
+            android:text="@string/terminate_btn_txt" app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintVertical_bias="0.521"/>
 
 
 </android.support.constraint.ConstraintLayout>
