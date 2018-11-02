@@ -4,16 +4,12 @@ Control your Android device via python scripts.
 ## Architecture
 ![](architecture.png)
 
-## Example
-Automatically input text "111", "222", "333".
-![](example.gif)
-
 ## Usage
 ### 1. Install the App
-Install the [PyAndroidControl](https://github.com/nladuo/PyAndroidControl/releases) App, and make sure your device has been **"root"**.
+Install the [PyAndroidControl App](https://github.com/nladuo/PyAndroidControl/releases), and make sure your device has been **"root"**.
 
 ### 2. Write your Logics
-change the [simple-control-server/logics.py](simple-control-server/logics.py) to what ever you want.
+Change the [simple-control-server/logics.py](simple-control-server/logics.py) to what ever you want.
 ```
 def get_commands(token, img_file):
     """  """
@@ -28,5 +24,8 @@ def get_commands(token, img_file):
     ]
     return cmds
 ```
+### 3. Demo
+Automatically input text "111", "222", "333".
+![](example.gif)
 ## License
 MIT
