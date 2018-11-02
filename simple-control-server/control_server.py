@@ -23,7 +23,7 @@ def allowed_file(filename):
 @app.route('/login')
 def login():
     return json.dumps({
-        "token": str(uuid.uuid4()),
+        "token": str(uuid.uuid4()).replace("-", ""),
         "interval": 1000
     })
 

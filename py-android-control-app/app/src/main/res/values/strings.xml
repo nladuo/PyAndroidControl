@@ -2,7 +2,7 @@
     <string name="app_name">PyAndroidControl</string>
     <string name="start_btn_txt">Start Service</string>
     <string name="terminate_btn_txt">Terminate Service</string>
-    <string name="edtext_hint">Input the baseURL of control server</string>
+    <string name="edtext_hint">Input the BaseURL of control server</string>
     <string name="check_btn_txt">Check Connection</string>
     <string name="service_hint_txt">Commands:</string>
     <string name="startTxt">Start</string>

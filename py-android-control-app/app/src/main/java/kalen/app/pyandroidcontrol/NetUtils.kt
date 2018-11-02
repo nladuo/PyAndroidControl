@@ -90,6 +90,8 @@ object NetUtils {
             interval = jsonObj.get("interval").toString().toLong()
         } catch (e: Exception) {
             e.printStackTrace()
+            token = ""
+            interval = 1000
         }
 
         println(token)

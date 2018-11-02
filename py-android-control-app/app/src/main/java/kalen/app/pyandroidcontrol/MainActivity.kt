@@ -22,6 +22,7 @@ import android.support.v4.app.ActivityCompat
 import android.widget.EditText
 import android.app.ProgressDialog
 import android.widget.TextView
+import java.lang.Exception
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -54,8 +55,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         // shutdown the service
         stopBtn = findViewById(R.id.terminate_btn)
         stopBtn!!.setOnClickListener(this)
+
+        checkPermission()
     }
 
+    /**
+     * init BaseUrl EditText
+     */
     private fun initInput() {
         urlEdit = findViewById(R.id.url_input_edit)
 
@@ -67,8 +73,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when(v!!.id) {
             R.id.check_btn -> {
+                var urlEditStr = urlEdit!!.text.toString()
+
+                if (urlEditStr.endsWith("/")) {
+                    urlEditStr = urlEditStr.substring(0, urlEditStr.length-1)
+                    urlEdit!!.setText(urlEditStr)
+                }
+
                 val editor = sp!!.edit()
-                NetUtils.BASE_URL = urlEdit!!.text.toString()
+                NetUtils.BASE_URL = urlEditStr
                 editor.putString("base_url", NetUtils.BASE_URL)
                 editor.apply()
                 val task = GetTokenTask(this)
@@ -103,6 +116,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    /**
+     * check the READ_EXTERNAL_STORAGE and SYSTEM_OVERLAY_WINDOW Permission
+     */
     private fun checkPermission(): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
@@ -131,6 +147,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
 
+    /**
+     * Start Background Service
+     */
     private fun startBGService() {
         // check read, write and float window permission
         if (!checkPermission()){
@@ -176,7 +195,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         override fun doInBackground(vararg params: Void?): Int {
-            NetUtils.getToken()
+            try {
+                NetUtils.getToken()
+            }catch (e: Exception) {
+                e.printStackTrace()
+                NetUtils.token = ""
+            }
+
             Thread.sleep(1000) // sleep 1 second to make UI more friendly
             return 1
         }
@@ -184,19 +209,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         override fun onPostExecute(result: Int?) {
             super.onPostExecute(result)
             progressDialog!!.dismiss()
-            if (NetUtils.BASE_URL != "") {
-                showTView!!.setText("token:${NetUtils.token},  interval:${NetUtils.interval}")
+            if (NetUtils.token != "") {
+                showTView!!.text = "token:${NetUtils.token}\ninterval:${NetUtils.interval}"
                 startBtn!!.isEnabled = true
                 stopBtn!!.isEnabled = true
+            } else{
+                showTView!!.text = ""
+                startBtn!!.isEnabled = false
+                stopBtn!!.isEnabled = false
+                val dialog = AlertDialog.Builder(context).create()
+                dialog.setTitle("Connection Failure")
+                dialog.setMessage("Failed to login the control Server")
+                dialog.show()
             }
         }
     }
-
-//    inner class CheckUpdateAsyncTask(internal var context: Context, internal var isForeGround: Boolean) :
-//        AsyncTask<Void, Void, String>() {
-//        internal var progressDialog: ProgressDialog? = null
-//
-//    }
-
-
 }

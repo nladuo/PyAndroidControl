@@ -53,7 +53,6 @@ class BackgroundService : Service() {
     override fun onBind(intent: Intent): IBinder? {
         isStarted = true
         showFloatingWindow()
-
         return null
     }
 
