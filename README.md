@@ -6,7 +6,7 @@ Control your Android device via python scripts.
 
 ## Usage
 ### 1. Install the App
-Install the [PyAndroidControl App](https://github.com/nladuo/PyAndroidControl/releases), and make sure your device has been **"root"**.
+Install [PyAndroidControl App](https://github.com/nladuo/PyAndroidControl/releases), and make sure the App has **Root Permission**.
 
 ### 2. Write your Logics
 Change the [simple-control-server/logics.py](simple-control-server/logics.py) to what ever you want.
