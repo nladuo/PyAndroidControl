@@ -26,6 +26,6 @@ def get_commands(token, img_file):
 ```
 ### 3. Demo
 Automatically input text "111", "222", "333".
-![](example.gif)
+![](demo.gif)
 ## License
 MIT
