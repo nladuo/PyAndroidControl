@@ -24,8 +24,7 @@ def get_commands(token, img_file):
     ]
     return cmds
 ```
-### 3. Demo
-Automatically input text "111", "222", "333".
+### 3. Control your Device
 ![](demo.gif)
 ## License
 MIT
