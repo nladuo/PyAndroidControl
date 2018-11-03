@@ -8,7 +8,8 @@
 
 
 def get_commands(token, img_file):
-    """  """
+    """ analyze the screenshot and send
+        commands back to android device """
     img_file.save("tmp.png")
     print(token)
 

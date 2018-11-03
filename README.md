@@ -12,7 +12,8 @@ Install [PyAndroidControl App](https://github.com/nladuo/PyAndroidControl/releas
 Change the [simple-control-server/logics.py](simple-control-server/logics.py) to what ever you want.
 ```
 def get_commands(token, img_file):
-    """  """
+    """ analyze the screenshot and send 
+        commands back to android device """
     img_file.save("tmp.png")
     print(token)
 
@@ -23,6 +24,7 @@ def get_commands(token, img_file):
         'input text "333"',
     ]
     return cmds
+
 ```
 ### 3. Control your Device
 ![](demo.gif)
