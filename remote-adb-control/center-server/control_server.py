@@ -31,7 +31,7 @@ def get_commands(token, img_file):
 
     token_dict[token] = time.time()  # record time
 
-    cmds = command_dict[token].copy()  # your adb shell commands
+    cmds = json.loads(json.dumps(command_dict[token]))  # your adb shell commands
     command_dict[token] = []
 
     return cmds
@@ -123,6 +123,7 @@ def remote_adb_send_command():
 
     commands = json.loads(commands)
     command_dict[token] = commands
+    return "{}"
 
 
 if __name__ == '__main__':
