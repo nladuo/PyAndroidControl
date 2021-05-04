@@ -1,4 +1,5 @@
 from flask import Flask
+from flask import Flask
 from flask import request
 import uuid
 import json
@@ -22,10 +23,11 @@ def allowed_file(filename):
 
 @app.route('/login')
 def login():
+    token = request.args.get('token')
     return json.dumps({
-        "token": str(uuid.uuid4()).replace("-", ""),
-        "interval": 1000
+        "interval": 100
     })
+
 
 
 @app.route('/upload_screenshot', methods=['POST'])

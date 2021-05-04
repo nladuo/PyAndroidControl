@@ -23,6 +23,7 @@ import android.widget.EditText
 import android.app.ProgressDialog
 import android.widget.TextView
 import java.lang.Exception
+import java.util.*
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -31,6 +32,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var startBtn: Button? = null
     private var stopBtn: Button? = null
     private var urlEdit: EditText? = null
+    private var tokenEdit: EditText? = null
     private var showTView: TextView? = null
     private var sp: SharedPreferences? = null
 
@@ -64,10 +66,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
      */
     private fun initInput() {
         urlEdit = findViewById(R.id.url_input_edit)
+        tokenEdit = findViewById(R.id.token_input_edit)
 
         sp = getSharedPreferences("Default", Context.MODE_PRIVATE)
         NetUtils.BASE_URL = sp!!.getString("base_url", "")
         urlEdit!!.setText(NetUtils.BASE_URL)
+
+        var defaultToken = UUID.randomUUID().toString().split("-".toRegex())[0]
+        NetUtils.token = sp!!.getString("token", defaultToken)
+        tokenEdit!!.setText(NetUtils.token)
     }
 
     override fun onClick(v: View?) {
@@ -82,9 +89,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
                 val editor = sp!!.edit()
                 NetUtils.BASE_URL = urlEditStr
+                NetUtils.token = tokenEdit!!.text.toString()
                 editor.putString("base_url", NetUtils.BASE_URL)
+                editor.putString("token", NetUtils.token)
                 editor.apply()
-                val task = GetTokenTask(this)
+                val task = SetupTokenTask(this)
                 task.execute()
             }
 
@@ -180,11 +189,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             Intent(this@MainActivity, BackgroundService::class.java),
             conn, Context.BIND_AUTO_CREATE
         )
-
     }
 
 
-    private inner class GetTokenTask(internal var context: Context): AsyncTask<Void, Void, Int>() {
+    private inner class SetupTokenTask(internal var context: Context): AsyncTask<Void, Void, Int>() {
 
         var progressDialog: ProgressDialog? = null
 
@@ -196,7 +204,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         override fun doInBackground(vararg params: Void?): Int {
             try {
-                NetUtils.getToken()
+                NetUtils.setupToken()
             }catch (e: Exception) {
                 e.printStackTrace()
                 NetUtils.token = ""
@@ -210,7 +218,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             super.onPostExecute(result)
             progressDialog!!.dismiss()
             if (NetUtils.token != "") {
-                showTView!!.text = "token:${NetUtils.token}\ninterval:${NetUtils.interval}"
+                showTView!!.text = "token:${NetUtils.token}, interval:${NetUtils.interval}"
                 startBtn!!.isEnabled = true
                 stopBtn!!.isEnabled = true
             } else{

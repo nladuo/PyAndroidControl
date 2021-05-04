@@ -20,6 +20,18 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintHorizontal_bias="1.0" app:layout_constraintVertical_bias="0.006"/>
 
+    <EditText
+            android:hint="@string/edit_token_hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/token_input_edit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintVertical_bias="0.085" />
+
     <Button
             android:text="@string/check_btn_txt"
             android:layout_width="match_parent"
@@ -29,18 +41,21 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.13" app:layout_constraintHorizontal_bias="0.0"/>
+            app:layout_constraintVertical_bias="0.185"
+            app:layout_constraintHorizontal_bias="0.0" />
 
-    <TextView android:layout_width="match_parent"
-              android:id="@+id/show_tview"
-              android:layout_margin="5dp"
-              android:textSize="14sp"
-              app:layout_constraintBottom_toBottomOf="parent"
-              app:layout_constraintLeft_toLeftOf="parent"
-              app:layout_constraintRight_toRightOf="parent"
-              app:layout_constraintTop_toTopOf="parent"
-              android:layout_height="wrap_content"
-              app:layout_constraintVertical_bias="0.225"/>
+    <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/show_tview"
+            android:layout_margin="5dp"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintVertical_bias="0.265"
+            app:layout_constraintHorizontal_bias="1.0" />
 
     <TextView android:layout_width="match_parent"
               android:text="@string/service_hint_txt"

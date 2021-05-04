@@ -71,11 +71,11 @@ object NetUtils {
     }
 
     /**
-     * get login token and interval information from control server
+     * setup the login token and get interval information from control server
      */
-    fun getToken() {
+    fun setupToken() {
         val client = OkHttpClient()
-        val url =  "$BASE_URL/login"
+        val url =  "$BASE_URL/login?token=$token"
         println(url)
         val req = Request.Builder().url(url).build()
         val call = client.newCall(req)
@@ -86,7 +86,7 @@ object NetUtils {
             println(body)
             val tokener = JSONTokener(body)
             val jsonObj = JSONObject(tokener)
-            token = jsonObj.get("token").toString()
+//            token = jsonObj.get("token").toString()
             interval = jsonObj.get("interval").toString().toLong()
         } catch (e: Exception) {
             e.printStackTrace()

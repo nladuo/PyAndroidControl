@@ -1,5 +1,5 @@
 # PyAndroidControl
-Control your Android device via python scripts.
+Your Remote ADB controller. Control your Android device via python scripts. 
 
 ## Architecture
 ![](architecture.png)
@@ -28,5 +28,14 @@ def get_commands(token, img_file):
 ```
 ### 3. Control your Device
 ![](demo.gif)
+
+
+## Remote ADB Control
+Mock adb with PyAndroidControl, check [remote-adb-control](remote-adb-control).
+
+- 1. First Start [remote-adb-control/center-server/control_server.py](remote-adb-control/center-server/control_server.py)
+- 2. Then use the [remote-adb-control/control-client/remote_adb_api.py](remote-adb-control/control-client/remote_adb_api.py) to control your device like using ADB.
+
+
 ## License
 MIT

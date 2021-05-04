@@ -44,8 +44,8 @@ class BackgroundService : Service() {
         layoutParams!!.gravity = Gravity.START or Gravity.TOP
         layoutParams!!.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-        layoutParams!!.width = 250
-        layoutParams!!.height = 140
+        layoutParams!!.width = 100
+        layoutParams!!.height = 70
         layoutParams!!.x = 300
         layoutParams!!.y = 300
     }
@@ -73,6 +73,7 @@ class BackgroundService : Service() {
         }
         button = Button(applicationContext)
         button!!.setText(R.string.startTxt)
+        button!!.setTextSize(8F)
         windowManager!!.addView(button, layoutParams)
 
         button!!.setOnTouchListener(FloatingOnTouchListener())
@@ -94,8 +95,8 @@ class BackgroundService : Service() {
 
                                 for (cmd in cmds) {
                                     Shell.SU.run(cmd)
-                                    // random sleep 50-150ms
-                                    val rndTime:Long = (50 + rnd.nextInt(100)).toLong()
+                                    // random sleep 20-50ms
+                                    val rndTime:Long = (20 + rnd.nextInt(30)).toLong()
                                     Thread.sleep(rndTime)
                                 }
                             } catch (e: Exception) {
@@ -116,7 +117,6 @@ class BackgroundService : Service() {
     private inner class FloatingOnTouchListener : View.OnTouchListener {
         private var x: Int = 0
         private var y: Int = 0
-
 
         override fun onTouch(view: View, event: MotionEvent): Boolean {
             when (event.action) {
