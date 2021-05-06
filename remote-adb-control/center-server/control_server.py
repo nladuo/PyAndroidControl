@@ -111,6 +111,20 @@ def remote_adb_get_screenshot():
     return app.send_static_file(f'{token}.png')
 
 
+@app.route('/remote_adb/get_screenshot_unix')
+def remote_adb_get_screenshot_unix():
+    global token_dict
+
+    token = request.args.get('token')
+    password = request.args.get('password')
+
+    if SERVER_PASSWORD != password:
+        return json.dumps({'code': -1, 'msg': 'error password'})
+
+    return json.dumps({"unix": token_dict[token]})
+
+
+
 @app.route('/remote_adb/send_command')
 def remote_adb_send_command():
     global token_dict, command_dict
